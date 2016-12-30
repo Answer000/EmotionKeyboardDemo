@@ -18,8 +18,8 @@
 @property (nonatomic,strong) UIButton *sendBtn;
 @property (nonatomic,strong) EmotionViewController *emotionVC;
 @property (nonatomic,strong) UILabel *placeholderLable;
-@property (nonatomic,assign) CGFloat textInputHeight;
-@property (nonatomic,assign) CGFloat TextInputMaxHeight;
+@property (nonatomic,assign) NSInteger textInputHeight;
+@property (nonatomic,assign) NSInteger TextInputMaxHeight;
 @property (nonatomic,assign) CGFloat keyboardHeight;
 @property (nonatomic,assign) BOOL isKeyboardShow;
 @property (nonatomic,assign) CGPoint originOffset;
@@ -182,10 +182,6 @@
         f.origin.y = kSCREENHEIGHT - _keyboardHeight - _TextInputMaxHeight - 10 - 8;
         f.size.height = _TextInputMaxHeight + 20;
         self.backgroundView.frame = f;
-        
-        CGRect e = self.backgroundView.frame;
-        e.size.height = self.backgroundView.frame.size.height;
-        self.backgroundView.frame = e;
     }else{
         CGRect b = self.textView.frame;
         b.size.height = _textInputHeight;
@@ -195,10 +191,6 @@
         f.origin.y = kSCREENHEIGHT - _keyboardHeight - _textInputHeight - 5.5 - 8;
         f.size.height = _textInputHeight + 15.5;
         self.backgroundView.frame = f;
-        
-        CGRect e = self.backgroundView.frame;
-        e.size.height = self.backgroundView.frame.size.height;
-        self.backgroundView.frame = e;
     }
 }
 
@@ -212,5 +204,9 @@
 #pragma mark-  开始触摸
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [self textViewResignFirstResponder];
+}
+
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 @end
